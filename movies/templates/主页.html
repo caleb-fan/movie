@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>猎影网</title>
+    {% load staticfiles %}
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript">
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!--//for-mobile-apps-->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{% static 'css/contactstyle.css' %}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{% static 'css/faqstyle.css' %}" type="text/css" media="all"/>
+    <link href="{% static 'css/single.css' %}" rel='stylesheet' type='text/css'/>
+    <link href="{% static 'css/medile.css' %}" rel='stylesheet' type='text/css'/>
+    <!-- banner-slider -->
+    <link href="{% static 'css/jquery.slidey.min.css' %}" rel="stylesheet">
+    <!-- //banner-slider -->
+    <!-- pop-up -->
+    <link href="{% static 'css/popuo-box.css' %}" rel="stylesheet" type="text/css" media="all"/>
+    <!-- //pop-up -->
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+    <!-- //font-awesome icons -->
+    <!-- js -->
+    <script type="text/javascript" src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+
+    <style type="text/css">
+
+
+        article {
+            width: 100%;
+            padding: 80px 0;
+            background: url({% static 'images/电影.jpg' %});
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        .page_title:hover .rotate_icon {
+            animation: rotate 300ms linear;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #contact .row img {
+            width: 13%;
+        }
+
+        .title_line {
+            width: 52px;
+            height: 4px;
+            background: orange;
+        }
+
+        /* 二级页面 */
+        .xiangqing.in {
+            animation: in_top 1s forwards;
+            position: fixed;
+            z-index: 50;
+        }
+
+        .xiangqing {
+            position: fixed;
+            z-index: 50;
+            top: 1200px;
+            background: white;
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes in_top {
+            from {
+                top: 1200px;
+            }
+            to {
+                top: 0px;
+            }
+        }
+
+        .xiangqing.out {
+            animation: out_top 1s forwards;
+            position: fixed;
+            z-index: 50;
+        }
+
+        @keyframes out_top {
+            from {
+                top: 0px;
+            }
+            to {
+                top: 1200px;
+            }
+        }
+
+        /*二级页面结束*/
+
+        /*二级页面图标结束*/
+        {#三级页面动画效果#}
+        .bofang.in {
+            animation: in_top 1s forwards;
+            position: fixed;
+            z-index: 200;
+        }
+
+        .bofang {
+            position: fixed;
+            z-index: 200;
+            top: 1200px;
+        }
+
+        .bofang.out {
+            animation: out_top 1s forwards;
+            position: fixed;
+            z-index: 200;
+        }
+
+        /*三级页面结束*/
+        /*三级级页面图标*/
+        .guanbi1 {
+            width: 30px;
+            height: 30px;
+            position: fixed;
+            right: 20px;
+            top: 8px;
+            z-index: 201;
+            opacity: 0;
+        }
+
+        .guanbi1.o {
+            opacity: 1;
+        }
+
+        /*三级页面图标结束*/
+        /*二级页面图标*/
+        .guanbi {
+            position: absolute;
+            top: -25px;
+            right: 0px;
+        }
+
+        /*二级页面图标结束*/
+    </style>
+</head>
+
+<body>
+{#头部#}
+<div class="header b">
+    <div class="container">
+        <div class="w3layouts_logo">
+            <a href="#">
+                <h1 style="display: inline-block;">猎影</h1>
+                <div style="display: inline-block;background: {% static 'images/1.jpg' %};background-size:100%;height: 30px; width: 35px;margin-left: -70px;">
+                </div>
+            </a>
+        </div>
+        <div class="w3_search">
+            <form action="/search/" method="get">
+                <input type="text" name="search" placeholder="影片名">
+                <input type="submit" value="搜索">
+            </form>
+        </div>
+
+        <div class="w3l_sign_in_register">
+            <ul>
+                {% if request.session.u_name is None %}
+                    <li><i class="fa fa-phone" aria-hidden="true"></i> (+86) 13688523396</li>
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModal">登陆</a>
+                    </li>
+                {% endif %}
+                {% if request.session.u_name is not None %}
+                    <li><i class=""></i> 欢迎，<span id="yonghuming">{{ request.session.u_name }}</span></li>
+                    <li>
+                        <a href="/logout/">注销</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+        {#清除子元素的浮动问题#}
+        <div class="clearfix"></div>
+    </div>
+</div>
+<!--登录模块-->
+<div class="modal video-modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                登录 & 注册
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <section>
+                <div class="modal-body">
+                    <div class="w3_login_module">
+                        <div class="module form-module">
+                            <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+                                <div class="tooltip">点击我切换</div>
+                            </div>
+                            <div class="form">
+                                <h3>登录账户</h3>
+                                <form action="/denglu/" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="u_name" placeholder="用户名/电话号码" required="">
+                                    <input type="password" name="u_pass" placeholder="密码" required="">
+                                    <input type="submit" value="登录">
+
+                                </form>
+                            </div>
+                            <div class="form">
+                                <h3>创建一个账户</h3>
+                                <form action="/zhuce/" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="Username" placeholder="用户名" required="">
+                                    <input type="password" name="Password" placeholder="密码" required="">
+                                    <input type="password" name="Password2" placeholder="确认密码" required="">
+                                    <input type="text" name="Phone" placeholder="电话号码" required="">
+                                    <input type="submit" value="注册">
+                                </form>
+                            </div>
+                            <div class="cta wangjimima">
+                                <a>忘记密码?</a>
+                            </div>
+                            <script type="text/javascript">
+        $(function () {
+            $(".wangjimima").click(function () {
+                alert("请与管理员联系！！")
+            })
+        })
+    </script>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- 导航栏 -->
+<div class="movies_nav">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+                <nav>
+                    <ul class="nav navbar-nav">
+                        <li class="">
+                            <a href="http://127.0.0.1:8000">主页</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">类型 <b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <li>
+                                    <div class="col-sm-4">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/classify/?type=动作" name="type" id="type">动作</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=剧情" name="type" id="type">剧情</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=冒险" name="type" id="type">冒险</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=动画" name="type" id="type">动画</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=惊悚" name="type" id="type">惊悚</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=奇幻" name="type" id="type">奇幻</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/classify/?type=传记" name="type" id="type">传记</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=心理" name="type" id="type">心理</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=记录" name="type" id="type">记录</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=家庭" name="type" id="type">家庭</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=音乐" name="type" id="type">音乐</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=战争" name="type" id="type">战争</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/classify/?type=伦理" name="type" id="type">伦理</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=犯罪" name="type" id="type">犯罪</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=人物" name="type" id="type">人物</a>
+                                            </li>
+                                            <li>
+                                                <a href="/classify/?type=喜剧" name="type" id="type">喜剧</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">国家<b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <li>
+                                    <div class="col-sm-6">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/nation/?type=中国" name="type" id="type">中国</a>
+                                            </li>
+                                            <li>
+                                                <a href="/nation/?type=美国" name="type" id="type">美国</a>
+                                            </li>
+                                            <li>
+                                                <a href="/nation/?type=日本" name="type" id="type">日本</a>
+                                            </li>
+                                            <li>
+                                                <a href="/nation/?type=英国" name="type" id="type">英国</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/nation/?type=韩国" name="type" id="type">韩国</a>
+                                            </li>
+                                            <li>
+                                                <a href="/nation/?type=泰国" name="type" id="type">泰国</a>
+                                            </li>
+                                            <li>
+                                                <a href="/nation/?type=柬埔寨" name="type" id="type">柬埔寨</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">上映日期<b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <li>
+                                    <div class="col-sm-6">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/data/?type=2010" name="type" id="type">2010</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2011" name="type" id="type">2011</a>
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2012" name="type" id="type">2012</a>
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2013" name="type" id="type">2013</a>
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2014" name="type" id="type">2014</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/data/?type=2015" name="type" id="type">2015</a>
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2016" name="type" id="type">2016</a>
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2017" name="type" id="type">2017</a>
+                                            </li>
+                                            <li>
+                                                <a href="/data/?type=2018" name="type" id="type">2018</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">A-Z列表<b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <li>
+                                    <div class="col-sm-4">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/list/?type=a" name="type" id="type">A</a>
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=b" name="type" id="type">B</a>
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=c" name="type" id="type">C</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=d" name="type" id="type">D</a>
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=e" name="type" id="type">E</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=f" name="type" id="type">F</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=g" name="type" id="type">G</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=h" name="type" id="type">H</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=i" name="type" id="type">I</a>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/list/?type=j" name="type" id="type">J</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=k" name="type" id="type">K</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=l" name="type" id="type">L</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=m" name="type" id="type">M</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=n" name="type" id="type">N</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=o" name="type" id="type">O</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=p" name="type" id="type">P</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=q" name="type" id="type">Q</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=r" name="type" id="type">R</a>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <ul class="multi-column-dropdown">
+                                            <li>
+                                                <a href="/list/?type=s" name="type" id="type">S</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=t" name="type" id="type">T</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=u" name="type" id="type">U</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=v" name="type" id="type">V</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=w" name="type" id="type">W</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=x" name="type" id="type">X</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=y" name="type" id="type">Y</a>
+
+                                            </li>
+                                            <li>
+                                                <a href="/list/?type=z" name="type" id="type">Z</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="short-codes.html" id="gerenshoucang" data-toggle="modal" data-target="#myModal2">个人收藏</a>
+                        </li>
+                        <div class="modal video-modal fade" id="myModal2" tabindex="-1" role="dialog"
+                             aria-labelledby="myModal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" id="shoucang">
+
+                                </div>
+                            </div>
+                        </div>
+                        <li>
+                            <a href="https://sou.zhaopin.com/?jl=599&kw=python%E5%B7%A5%E7%A8%8B%E5%B8%88&kt=3">人才招聘</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- 轮播图 -->
+<div id="slidey" style="display:none;">
+    <ul>
+        <li><img src="{% static 'images/泰山.jpg' %}" alt=" ">
+            <p class='title'>泰山</p>
+            <p class='description'> 泰山适应了伦敦的生活，被召回他在丛林中的故居，以调查采矿营地的活动。</p>
+        </li>
+        <li><img src="{% static 'images/2.jpg' %}" alt=" ">
+            <p class='title'>疾速天使</p>
+            <p class='description'>6名儿童与禽类DNA进行基因杂交，在全国各地飞行以发现它们的起源。</p>
+        </li>
+        <li><img src="{% static 'images/急速天使.jpg' %}" alt=" ">
+            <p class='title'>独立</p>
+            <p class='description'>随着美国总统和公民决定这些外星人是否值得信任......或担心，人类的命运悬而未决。</p>
+        </li>
+        <li><img src="{% static 'images/4.jpg' %}" alt=" ">
+            <p class='title'>中央情报局</p>
+            <p class='description'>鲍勃·斯通（Dwayne Johnson）因为超重而被称为青少年，他表现出高中团聚，看上去很健康。</p>
+        </li>
+        <li><img src="{% static 'images/6.jpg' %}" alt=" ">
+            <p class='title'>冰河世纪</p>
+            <p class='description'>在电影的结局中，Scrat一直在努力控制外星飞船，直到它在火星上坠毁，摧毁了地球上的所有生命。</p>
+        </li>
+        <li><img src="{% static 'images/7.jpg' %}" alt=" ">
+            <p class='title'>X - Man</p>
+            <p class='description'>1977年，超自然的调查人员埃德（帕特里克·威尔逊）和洛林·沃伦（Lorraine Warren）从一个自我实施的休假中走出来，前往北部的自治市区恩菲尔德...</p>
+        </li>
+    </ul>
+</div>
+<!--控制轮播图-->
+<script src="{% static 'js/jquery.slidey.js' %}"></script>
+<script src="{% static 'js/jquery.dotdotdot.min.js' %}"></script>
+<script type="text/javascript">
+    $("#slidey").slidey({
+        interval: 2000,
+        listCount: 5,
+        autoplay: false,
+        showList: true
+    });
+    $(".slidey-list-description").dotdotdot();
+</script>
+<!--分享-->
+<div class="general_social_icons" style="opacity: 1">
+    <nav class="social">
+        <ul>
+            <li class="w3_twitter">
+                <a href="https://weibo.com/">Weibo <i class="fa fa-weibo"></i></a>
+            </li>
+            <li class="w3_dribbble">
+                <a href="https://www.qq.com/">QQ <i class="fa fa-qq"></i></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{#全部电影图标#}
+<div class="general">
+    <h4 class="latest-text w3_latest_text">全部电影</h4>
+    <div class="dianying container">
+        {#循环放入全部电影#}
+
+    </div>
+</div>
+{#分页#}
+<ul class="pagination" style="margin-left: 530px;padding-bottom: 50px">
+			<li class="previous"><a >&laquo;</a></li>
+			<li class="active"><a class="fenye" href="http://127.0.0.1:8000/">1</a></li>
+			<li><a id="fenye">2</a></li>
+			<li><a id="fenye3">3</a></li>
+			<li><a id="fenye4">4</a></li>
+			<li><a id="fenye5">5</a></li>
+            <li><a id="fenye6">6</a></li>
+			<li><a id="fenye7">7</a></li>
+            <li><a id="fenye8">8</a></li>
+            <li><a id="fenye9">9</a></li>
+            <li><a id="fenye10">10</a></li>
+            <li><a id="fenye11">11</a></li>
+			<li class="next"><a >&raquo;</a></li>
+		</ul>
+{#ajax实现分页功能#}
+<script type="text/javascript">
+        $(function () {
+            $("#fenye").click(function () {
+                var page = $("#fenye").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye3").click(function () {
+                var page = $("#fenye3").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye4").click(function () {
+                var page = $("#fenye4").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye5").click(function () {
+                var page = $("#fenye5").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye6").click(function () {
+                var page = $("#fenye6").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye7").click(function () {
+                var page = $("#fenye7").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye8").click(function () {
+                var page = $("#fenye8").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye9").click(function () {
+                var page = $("#fenye9").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye10").click(function () {
+                var page = $("#fenye10").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            $("#fenye11").click(function () {
+                var page = $("#fenye11").text()
+                $.get("/fenye/", {'page': page}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            })
+            var page = $(".fenye").text()
+            if(page=="1")
+                {
+                $.get("/fenye/", {'page': 1}, function (ret) {
+                    $(".dianying").html(ret)
+                })
+            }
+        })
+    </script>
+<!--回到首页，下拉菜单(类型，时间，a-z列表)-->
+    <script src={% static 'js/bootstrap.min.js' %}></script>
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+
+    <!-- 置顶按钮,缓慢滑动-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+        });
+
+    </script>
+    {# 尾 部 #}
+    <article>
+        <div class="container" style="margin-top: -30px;">
+            <div class="row" style="margin-top: -50px;">
+                <div class="col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 page_title"
+                     style="background:white;padding: 60px;">
+                    <p class="text-center"><span
+                            style="font-size: 90px;font-weight: 1000;line-height: 0px;">NEXT </span></p>
+                    <p class="text-center">
+                        <a href="#" class="fa fa-angle-down rotate_icon"
+                           style="font-size: 90px;line-height: 100px;text-decoration: none;color: #000000;"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <section style="background:url({% static 'images/a.jpg' %});background-size: 100%; padding: 100px 0;" id="contact">
+        <div class="container">
+            <div class="row text-center">
+                <img src={% static 'img/1.png' %}/>
+                <img src={% static 'img/2.png' %}/>
+                <img src={% static 'img/3.png' %}/>
+                <img src={% static 'img/4.png' %}/>
+                <img src={% static 'img/5.png' %}/>
+                <img src={% static 'img/6.png' %}/>
+                <img src={% static 'img/8.png' %}/>
+            </div>
+            <div class="center-block">
+                <img src={% static 'img/wechat.jpg' %} style="margin-left: 450px;margin-top: 150px;margin-bottom: 30px;"
+                />
+                <p style="color: white;text-align: center;">会员服务及报价，请扫二维码加入我们的微信服务号进行咨询<br/>或<br/>微信搜索公众号：猎影</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: black;height: 40px;">
+        <p style="color: white; text-align: center;">© 2017 北京必影有限公司 版权所有 京ICP备16046633号</p>
+    </footer>
+    {#尾部结束#}
+
+    {#二级页面#}
+    <div class="xiangqing" id="user_info" style="background:url({% static 'img/111.jpg' %});">
+
+    </div>
+    {#注册登录的切换已经密码错误的判断#}
+    <script>
+        {% if flag == 0 %}
+            alert("账号或密码错误,请重新登录注册")
+        {% endif %}
+        $('.toggle').click(function () {
+            // Switches the Icon
+            $(this).children('i').toggleClass('fa-pencil');
+            // Switches the forms
+            $('.form').animate({
+                height: "toggle",
+                'padding-top': 'toggle',
+                'padding-bottom': 'toggle',
+                opacity: "toggle"
+            }, "slow");
+        });
+    </script>
+
+    {#收藏,用ajax实现#}
+    <script type="text/javascript">
+        $(function () {
+            $("#gerenshoucang").click(function () {
+                var u_name = $("#yonghuming").text()
+                if (u_name == "") {
+                    u_name = 0
+                }
+                $.get("/shoucang/", {'username': u_name}, function (ret) {
+                    $("#shoucang").html(ret)
+                })
+            })
+        })
+    </script>
+
+</body>
+</html>

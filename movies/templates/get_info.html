@@ -1,0 +1,116 @@
+{% load staticfiles %}
+<div class="container" style="background: white">
+    <h2 id="m_name" style="padding-bottom: 30px;padding-top: 15px">{{ movie.m_name }}</h2>
+    <div class="col-lg-3" style="float: left;">
+        <img src="/{{ movie.m_post }}" style="width: 270px;height: 385px;"/>
+    </div>
+    <div class="col-lg-5">
+        <div style="width: auto;height: 35px;"><h3>上映时间：{{ movie.m_data }}</h3></div>
+        <div style="width: auto;height: 25px;overflow: hidden;margin-top: 25px"><h3>片名：{{ movie.m_name }}</h3></div>
+        <div style="width: auto;height: 35px;margin-top: 25px"><h3>类别：{{ movie.m_type }}</h3></div>
+        <div style="width: auto;height: 35px;margin-top: 25px"><h3>导演：{{ movie.m_dir }}</h3></div>
+        <div style="width: auto;height: 53px;overflow: hidden;margin-top: 25px"><h3>主演：{{ movie.m_actor }}</h3></div>
+        <div class="guankan btn btn-default" style="background: gainsboro;float: left;margin-top: 15px">
+            {{ value }}
+            {% if value2 is 1 %}
+                <script type="text/javascript">
+                    $(function () {
+                        $(".guankan").addClass("disabled")
+                    })
+                </script>
+            {% endif %}
+        </div>
+        <form method="get" title="{{ movie.m_name }}">
+            <div id="shoucang_btn" class="btn btn-default" style="background: gainsboro;margin-top: 15px">
+                <span id="jiarushoucang" style="opacity: 1">{{ flag }}</span>
+                {% if value2 is 1 %}
+                <script type="text/javascript">
+                    $(function () {
+                        $("#shoucang_btn").addClass("disabled")
+                    })
+                </script>
+            {% endif %}
+            </div>
+        </form>
+
+    </div>
+    <div class="col-lg-3">
+        <img src={% static 'img/wechat.jpg' %}/>
+    </div>
+    <div class="col-lg-1">
+        <div class="guanbi">
+            <img src={% static 'images/关闭.jpg' %}/ style="width: 30px; height: 30px;">
+        </div>
+    </div>
+</div>
+<div class="container" style="background: white;height: 296px">
+    <h1 style="padding-top: 25px;padding-bottom: 20px">电影简介</h1>
+    <h4>{{ movie.m_content }}</h4>
+</div>
+
+<div class="guanbi1">
+    <img src={% static 'images/关闭.jpg' %}/ style="width: 30px; height: 30px;background: black">
+</div>
+<div class="bofang" style="width: 100%;height: 100%">
+    <select name="playLink" id="playLink" value="bofangyuan" style="position: fixed;left: 80px;top: 10px;opacity: 0">
+        <option value="default" hidden selected>切换播放源</option>
+        <option value="{{ movie.m_iqylink }}">爱奇艺</option>
+        <option value="{{ movie.m_tecentlink }}">腾讯</option>
+        <option value="{{ movie.m_youkulink }}">优酷</option>
+    </select>
+    <iframe src="http://www.wmxz.wang/video.php?url={{ movie.m_iqylink }}" width="100%" height="800px" id="player"
+            style="z-index: 500"></iframe>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $(".guanbi").click(function () {
+            $(".xiangqing").removeClass("in")
+            $(".xiangqing").addClass("out")
+            $(".guanbi").removeClass("o")
+        })
+        $(".guankan").click(function () {
+            $(".general_social_icons").css("opacity", "0")
+            $(".bofang").removeClass("out")
+            $(".bofang").addClass("in")
+            setTimeout(function () {
+                $(".guanbi1").addClass("o")
+            }, 2000)
+            setTimeout(function () {
+                $("#playLink").css("opacity", "1")
+            }, 2000)
+        })
+        $(".guanbi1").click(function () {
+            $(".general_social_icons").css("opacity", "1")
+            $(".bofang").removeClass("in")
+            $(".bofang").addClass("out")
+            $(".guanbi1").removeClass("o")
+            $("#playLink").css("opacity", "0")
+        })
+    })
+</script>
+{#三级页面播放地址切换#}
+<script type="text/javascript">
+    $(function () {
+        $("#playLink").change(function () {
+            var link = $(this).val()
+            $("#player").attr("src", "http://www.wmxz.wang/video.php?url=" + link)
+        })
+    })
+</script>
+{#收藏的切换，ajax#}
+<script type="text/javascript">
+    $(function () {
+        $("#shoucang_btn").click(function () {
+            $("#jiarushoucang").css("opacity", "0")
+            var m_name = $("#m_name").text()
+            var u_name = $("#yonghuming").text()
+            if (u_name == "") {
+                u_name = 0
+            }
+            $.get("/shoucang_jiaru/", {'u_name': u_name, 'm_name': m_name}, function (ret) {
+                $("#shoucang_btn").html(ret)
+            })
+        })
+    })
+</script>
+

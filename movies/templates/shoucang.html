@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<div class="modal-header">
+<span>我的收藏</span>
+    <button id="close_btn" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+<section>
+<div class="modal-body" style="height: 600px;overflow: scroll;">
+
+{% if moviess != 0 %}
+{% for movie in moviess %}
+        <div class="col-lg-3">
+            <div class="col-md-12 w3l-movie-gride-agile">
+					<span class="hvr-shutter-out-horizontal"><img class="a" style="height: 140px;weight:100px " src="/{{ movie.m_post }}" title="{{ movie.m_name }}" class="img-responsive"/>
+						<div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+					</span>
+
+                <h6><p style="overflow: hidden;text-align: center;white-space: nowrap ">{{ movie.m_name }}</p></h6>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h1 style="text-align: center">请先登录！！</h1>
+{% endif %}
+
+</div>
+</section>
+
+<script type="text/javascript">
+            $(function() {
+				$(".a").click(function() {
+                    $("#myModal2").removeClass("in")
+				    var m_name = $(this).attr("title")
+                    var u_name = $("#yonghuming").text()
+                    if(u_name==""){u_name=0}
+                        $.get("/get_info/", {'movie':m_name,'u_name':u_name}, function (ret) {
+                            $("#user_info").html(ret)
+                        })
+					$(".xiangqing").removeClass("out")
+					$(".xiangqing").addClass("in")
+					setTimeout(function(){$(".guanbi").addClass("o")},2000)
+				})
+			})
+		</script>
+
+
+

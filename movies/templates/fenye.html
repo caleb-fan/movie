@@ -1,0 +1,35 @@
+{% load staticfiles %}
+{% for movie in movies %}
+            <div class="col-md-2 w3l-movie-gride-agile">
+					<span class="hvr-shutter-out-horizontal"><img id="a" class="a" style="height: 250px;weight:175px "
+                                                                  src="/{{ movie.m_post }}" title="{{ movie.m_name }}"
+                                                                  class="img-responsive"/>
+						<div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+					</span>
+
+                <div class="w3l-movie-text">
+                    <h6><p style="overflow: hidden;text-align: center;white-space: nowrap ">{{ movie.m_name }}</p></h6>
+                </div>
+            </div>
+{% endfor %}
+
+{#点击进入详情页面#}
+    <script type="text/javascript">
+        $(function () {
+            $(".a").click(function () {
+                var m_name = $(this).attr("title")
+                var u_name = $("#yonghuming").text()
+                if (u_name == "") {
+                    u_name = 0
+                }
+                $.get("/get_info/", {'movie': m_name, 'u_name': u_name}, function (ret) {
+                    $("#user_info").html(ret)
+                })
+                $(".xiangqing").removeClass("out")
+                $(".xiangqing").addClass("in")
+                setTimeout(function () {
+                    $(".guanbi").addClass("o")
+                }, 2000)
+            })
+        })
+    </script>
